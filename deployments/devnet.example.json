@@ -1,0 +1,15 @@
+{
+  "cluster": "devnet",
+  "rpc": "https://api.devnet.solana.com",
+  "ws": "wss://api.devnet.solana.com",
+  "caip2": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1",
+  "usdcMint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+  "facilitator": "https://x402.org/facilitator",
+  "programId": "REPLACE_AFTER_CONFIRMED_DEPLOY",
+  "idlSha256": "REPLACE_AFTER_BUILD",
+  "initTx": null,
+  "happyPath": [],
+  "deny": [],
+  "honesty": "x402 on this repo is exact SPL TransferChecked to the merchant ATA. The Anchor program is a cap/pause/replay receipt registry, not the settlement target.",
+  "note": "Copy to deployments/devnet.json only after confirmed signatures. Never invent program IDs, signatures, or explorer URLs."
+}

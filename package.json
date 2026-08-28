@@ -1,0 +1,52 @@
+{
+  "name": "atlas-forge-svm",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Atlas Forge P4 Path A: Anchor receipt registry + x402 exact SPL TransferChecked on Solana Devnet",
+  "scripts": {
+    "lint": "prettier --check \"{app,scripts,tests}/**/*.ts\"",
+    "lint:fix": "prettier --write \"{app,scripts,tests}/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "test": "anchor test --validator legacy",
+    "probe": "npx ts-node --transpile-only scripts/00-probe.ts",
+    "airdrop": "npx ts-node --transpile-only scripts/01-airdrop.ts",
+    "usdc": "npx ts-node --transpile-only scripts/02-usdc.ts",
+    "deploy": "npx ts-node --transpile-only scripts/03-deploy.ts",
+    "init": "npx ts-node --transpile-only scripts/04-init.ts",
+    "x402:happy": "npx ts-node --transpile-only scripts/05-x402-happy.ts",
+    "x402:deny": "npx ts-node --transpile-only scripts/06-x402-deny.ts",
+    "record": "npx ts-node --transpile-only scripts/07-record-or-settle.ts",
+    "evidence": "npx ts-node --transpile-only scripts/08-write-evidence.ts",
+    "server": "npx ts-node --transpile-only app/server/index.ts",
+    "payer": "npx ts-node --transpile-only app/payer/index.ts"
+  },
+  "dependencies": {
+    "@anchor-lang/core": "^1.1.2",
+    "@solana/spl-token": "^0.4.13",
+    "@solana/web3.js": "^1.98.4",
+    "@x402/core": "^2.10.0",
+    "@x402/express": "^2.10.0",
+    "@x402/fetch": "^2.10.0",
+    "@x402/svm": "^2.10.0",
+    "@solana/kit": "^5.1.0",
+    "@scure/base": "^1.2.6",
+    "bs58": "^6.0.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^5.1.6",
+    "@types/chai": "^4.3.20",
+    "@types/express": "^4.17.21",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.13.10",
+    "chai": "^4.5.0",
+    "mocha": "^10.8.2",
+    "prettier": "^3.5.3",
+    "ts-mocha": "^10.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}

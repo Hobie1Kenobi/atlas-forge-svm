@@ -1,0 +1,19 @@
+.anchor
+.DS_Store
+target
+**/*.rs.bk
+node_modules
+test-ledger
+.yarn
+.surfpool
+keys/
+keys/**
+.env
+docs/.probe-cache.json
+deployments/.deploy-pending.json
+
+.idea
+.vscode
+
+# Keypair JSON (never commit secrets). Keep package.json / tsconfig / deployments examples.
+target/deploy/*-keypair.json

@@ -1,0 +1,63 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refuse secrets in git
+        run: |
+          if git ls-files | grep -E '(^|/)\.env$|(^|/)keys/.*\.json$|keypair\.json$'; then
+            echo "refusing keys/ or .env in git ls-files"
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@1.89.0
+        with:
+          components: rustfmt
+
+      - name: Install Solana CLI 3.1.10
+        run: |
+          sh -c "$(curl -sSfL https://release.anza.xyz/v3.1.10/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+
+      - name: Install Anchor 1.1.2
+        run: |
+          curl -sSfL -o "$HOME/.local/bin/anchor" \
+            https://github.com/solana-foundation/anchor/releases/download/v1.1.2/anchor-1.1.2-x86_64-unknown-linux-gnu
+          chmod +x "$HOME/.local/bin/anchor"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: npm install
+        run: npm install
+
+      - name: cargo fmt
+        run: cargo fmt --all -- --check
+
+      - name: Ephemeral program keypair (never baked)
+        run: |
+          mkdir -p target/deploy
+          solana-keygen new --no-bip39-passphrase --silent --force -o target/deploy/atlas_forge_svm-keypair.json
+          anchor keys sync
+          solana-keygen new --no-bip39-passphrase --silent --force -o "$HOME/.config/solana/id.json"
+
+      - name: anchor test (local)
+        run: |
+          rustc --version
+          solana --version
+          anchor --version
+          anchor test --skip-lint --validator legacy
+
+      - name: tsc --noEmit
+        run: npx tsc --noEmit

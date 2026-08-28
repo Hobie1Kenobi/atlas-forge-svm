@@ -1,0 +1,748 @@
+{
+  "address": "5u6WZQsMPrufRZVbnWKjv6K1cH2pmF3gXbVhK15rh1eQ",
+  "metadata": {
+    "name": "atlas_forge_svm",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Atlas Forge P4 Path A: cap/pause/replay receipt registry (not the x402 settlement target)"
+  },
+  "docs": [
+    "Cap/pause/replay receipt registry.",
+    "",
+    "Honesty line: x402 on this repo is exact SPL TransferChecked to the",
+    "merchant ATA. The Anchor program is a cap/pause/replay receipt registry,",
+    "not the settlement target."
+  ],
+  "instructions": [
+    {
+      "name": "initialize",
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  114,
+                  99,
+                  104,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "treasury_ata"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "price_atomic",
+          "type": "u64"
+        },
+        {
+          "name": "spend_cap_per_payer_window",
+          "type": "u64"
+        },
+        {
+          "name": "treasury",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "pause",
+      "discriminator": [
+        211,
+        22,
+        221,
+        251,
+        74,
+        121,
+        193,
+        47
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  114,
+                  99,
+                  104,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config.authority",
+                "account": "MerchantConfig"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "record_settlement",
+      "discriminator": [
+        225,
+        116,
+        158,
+        209,
+        29,
+        96,
+        45,
+        32
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  114,
+                  99,
+                  104,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config.authority",
+                "account": "MerchantConfig"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint",
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "treasury",
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "treasury_ata"
+        },
+        {
+          "name": "payer"
+        },
+        {
+          "name": "payer_ata"
+        },
+        {
+          "name": "receipt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  101,
+                  105,
+                  112,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config"
+              },
+              {
+                "kind": "account",
+                "path": "payer"
+              },
+              {
+                "kind": "arg",
+                "path": "nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer_spend",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  110,
+                  100,
+                  111,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config"
+              },
+              {
+                "kind": "account",
+                "path": "payer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "resource_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "nonce",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "set_params",
+      "discriminator": [
+        27,
+        234,
+        178,
+        52,
+        147,
+        2,
+        187,
+        141
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  114,
+                  99,
+                  104,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config.authority",
+                "account": "MerchantConfig"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint",
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "treasury_ata"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "price_atomic",
+          "type": "u64"
+        },
+        {
+          "name": "spend_cap_per_payer_window",
+          "type": "u64"
+        },
+        {
+          "name": "treasury",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "unpause",
+      "discriminator": [
+        169,
+        144,
+        4,
+        38,
+        10,
+        141,
+        188,
+        255
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  114,
+                  99,
+                  104,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config.authority",
+                "account": "MerchantConfig"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "MerchantConfig",
+      "discriminator": [
+        184,
+        154,
+        125,
+        252,
+        112,
+        73,
+        0,
+        144
+      ]
+    },
+    {
+      "name": "PayerSpend",
+      "discriminator": [
+        108,
+        28,
+        225,
+        243,
+        13,
+        252,
+        17,
+        225
+      ]
+    },
+    {
+      "name": "Receipt",
+      "discriminator": [
+        39,
+        154,
+        73,
+        106,
+        80,
+        102,
+        145,
+        153
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "InitEvent",
+      "discriminator": [
+        224,
+        129,
+        78,
+        87,
+        58,
+        43,
+        94,
+        127
+      ]
+    },
+    {
+      "name": "PaidEvent",
+      "discriminator": [
+        85,
+        254,
+        39,
+        110,
+        96,
+        196,
+        192,
+        12
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "Only the merchant authority may call this instruction"
+    },
+    {
+      "code": 6001,
+      "name": "Paused",
+      "msg": "Merchant is paused; new receipts are rejected"
+    },
+    {
+      "code": 6002,
+      "name": "OverCap",
+      "msg": "Payment would exceed spend_cap_per_payer_window"
+    },
+    {
+      "code": 6003,
+      "name": "Underpay",
+      "msg": "Amount is below the configured price"
+    },
+    {
+      "code": 6004,
+      "name": "WrongMint",
+      "msg": "Token mint does not match the merchant config mint"
+    },
+    {
+      "code": 6005,
+      "name": "ReplayNonce",
+      "msg": "Nonce was already settled for this payer"
+    },
+    {
+      "code": 6006,
+      "name": "Overflow",
+      "msg": "Checked arithmetic overflow"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidDecimals",
+      "msg": "Mint decimals must be 6"
+    },
+    {
+      "code": 6008,
+      "name": "WrongTreasury",
+      "msg": "Treasury ATA owner does not match config.treasury"
+    }
+  ],
+  "types": [
+    {
+      "name": "InitEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "treasury",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "price_atomic",
+            "type": "u64"
+          },
+          {
+            "name": "spend_cap_per_payer_window",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MerchantConfig",
+      "docs": [
+        "Cap/pause/replay registry for a single merchant. Not the x402 settlement target."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "treasury",
+            "docs": [
+              "Owner of the USDC ATA that x402 TransferChecked pays (`payTo`)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "price_atomic",
+            "type": "u64"
+          },
+          {
+            "name": "spend_cap_per_payer_window",
+            "type": "u64"
+          },
+          {
+            "name": "paused",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PaidEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "slot",
+            "type": "u64"
+          },
+          {
+            "name": "resource_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "nonce",
+            "type": "u64"
+          },
+          {
+            "name": "receipt",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PayerSpend",
+      "docs": [
+        "Per-payer spend accumulator; resets when `slot / WINDOW_SLOTS` changes."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer",
+            "type": "pubkey"
+          },
+          {
+            "name": "window_id",
+            "type": "u64"
+          },
+          {
+            "name": "spent",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Receipt",
+      "docs": [
+        "One settled access grant. Pause does not mutate already-settled receipts."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "slot",
+            "type": "u64"
+          },
+          {
+            "name": "resource_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "nonce",
+            "type": "u64"
+          },
+          {
+            "name": "settled",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "constants": [
+    {
+      "name": "MERCHANT_SEED",
+      "type": "bytes",
+      "value": "[109, 101, 114, 99, 104, 97, 110, 116]"
+    },
+    {
+      "name": "RECEIPT_SEED",
+      "type": "bytes",
+      "value": "[114, 101, 99, 101, 105, 112, 116]"
+    },
+    {
+      "name": "USDC_DECIMALS",
+      "docs": [
+        "Circle Devnet USDC and this program's local mints are 6 decimals."
+      ],
+      "type": "u8",
+      "value": "6"
+    },
+    {
+      "name": "WINDOW_SEED",
+      "type": "bytes",
+      "value": "[119, 105, 110, 100, 111, 119]"
+    },
+    {
+      "name": "WINDOW_SLOTS",
+      "docs": [
+        "Spend-cap window length in slots (~one Devnet epoch)."
+      ],
+      "type": "u64",
+      "value": "432000"
+    }
+  ]
+}
