@@ -8,6 +8,8 @@ test-ledger
 .surfpool
 keys/
 keys/**
+.keys/
+.keys/**
 .env
 docs/.probe-cache.json
 deployments/.deploy-pending.json

@@ -1,10 +1,10 @@
 # PUBLIC_DEVNET_REPORT
 
-Status: **BLOCKED**
+Status: **waiting for funding**
 
 x402 on this repo is exact SPL TransferChecked to the merchant ATA. The Anchor program is a cap/pause/replay receipt registry, not the settlement target.
 
-Devnet deploy and happy-path USDC movement were not executed. Local `anchor test --validator legacy` is green (7/7). Do not invent program IDs, signatures, or explorer URLs for a deployment that did not confirm.
+Devnet deploy and happy-path USDC movement were not executed. Pubkeys for a funded deploy are published in `deployments/devnet-pubkeys.json`. Waiting for ATLAS to fund those addresses from the operator wallet, then a follow-up will deploy. Local `anchor test --validator legacy` is green (7/7). Do not invent signatures or explorer URLs for a deployment that did not confirm.
 
 ## Cluster
 
@@ -43,9 +43,9 @@ Devnet deploy and happy-path USDC movement were not executed. Local `anchor test
 
 ## Program
 
-- Declared program ID (local keypair, **not deployed**): `5u6WZQsMPrufRZVbnWKjv6K1cH2pmF3gXbVhK15rh1eQ`
-- Devnet program ID: none (deploy not reached)
-- IDL SHA-256: `efdb490756ef11bc52f85d5e9499c8677a27780080793d30bb665e9f0e386452`
+- Declared program ID (local keypair, **not deployed**; synced to `keys/program.json` / `target/deploy/atlas_forge_svm-keypair.json`): `CFogKbTTNkDn9kQr6pNtnMDJnqTCTcaF9t5dzYajtVwA`
+- Devnet program ID: none (deploy not reached; waiting for funding)
+- Published pubkeys: `deployments/devnet-pubkeys.json`
 - Init tx: none
 
 ## Happy path
@@ -74,11 +74,15 @@ No confirmed signatures. Public RPC airdrop failed before ATAs / Circle Devnet U
 
 ## Blocked reasons (exact)
 
+Waiting for ATLAS to fund the published addresses in `deployments/devnet-pubkeys.json` from the funded operator wallet `4Dj2J34g2RNXPBNHT5J9bcUUPeiGKGeDfH3X3JzXNsuq`. No `requestAirdrop`, no `solana airdrop`, no `anchor deploy`, and no transactions were sent in this phase.
+
+Prior public-RPC airdrop failures (kept for the record; not retried):
+
 1. `scripts/01-airdrop.ts` / `connection.requestAirdrop`: `airdrop to DvuEDnCHimQwXrJ7uAhz5ybkF9dzcrnDgaBB8SBPWqQP failed: Internal error`
 2. `solana airdrop 2 <merchant> --url https://api.devnet.solana.com`: `Error: airdrop request failed. This can happen when the rate limit is reached.`
-3. `scripts/02-usdc.ts` (create ATA): `Transaction simulation failed: Attempt to debit an account but found no record of a prior credit.` because merchant/payer have **0 SOL**. Documented USDC path remains https://faucet.circle.com — not attempted after SOL airdrop failed. No fake USDC mint was created.
+3. `scripts/02-usdc.ts` (create ATA): `Transaction simulation failed: Attempt to debit an account but found no record of a prior credit.` because merchant/payer have **0 SOL**. Documented USDC path remains https://faucet.circle.com — not attempted; needs SOL first. No fake USDC mint was created.
 
-Keys remain gitignored. Skeleton + local tests are complete.
+Keys remain gitignored under `keys/` and `.keys/`. Skeleton + local tests are complete.
 
 ## Never
 
