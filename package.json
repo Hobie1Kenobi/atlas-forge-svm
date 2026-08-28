@@ -16,6 +16,7 @@
     "init": "npx ts-node --transpile-only scripts/04-init.ts",
     "x402:happy": "npx ts-node --transpile-only scripts/05-x402-happy.ts",
     "x402:deny": "npx ts-node --transpile-only scripts/06-x402-deny.ts",
+    "devnet:deny": "npx ts-node --transpile-only scripts/09-devnet-deny-matrix.ts",
     "record": "npx ts-node --transpile-only scripts/07-record-or-settle.ts",
     "evidence": "npx ts-node --transpile-only scripts/08-write-evidence.ts",
     "server": "npx ts-node --transpile-only app/server/index.ts",
