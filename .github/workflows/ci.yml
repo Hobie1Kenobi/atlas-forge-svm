@@ -29,16 +29,41 @@ jobs:
 
       - name: Install Solana CLI 3.1.10
         run: |
-          sh -c "$(curl -sSfL https://release.anza.xyz/v3.1.10/install)"
-          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+          set -euo pipefail
+          mkdir -p "$HOME/.local/share/solana/install" "$HOME/.local/bin"
+          INSTALL_LOG="$(mktemp)"
+          if ! sh -c "$(curl -sSfL https://release.anza.xyz/v3.1.10/install)" >"$INSTALL_LOG" 2>&1; then
+            echo "Solana CLI 3.1.10 install failed. Installer log (tail):"
+            tail -n 80 "$INSTALL_LOG"
+            echo "Destination listing:"
+            ls -la "$HOME/.local/share/solana/install" || true
+            exit 1
+          fi
+          BIN="$HOME/.local/share/solana/install/active_release/bin"
+          if [[ ! -x "$BIN/solana" || ! -x "$BIN/solana-keygen" || ! -x "$BIN/solana-test-validator" ]]; then
+            echo "Solana CLI binaries missing under $BIN after install"
+            ls -la "$BIN" || true
+            tail -n 80 "$INSTALL_LOG"
+            exit 1
+          fi
+          echo "$BIN" >> "$GITHUB_PATH"
+          "$BIN/solana" --version
 
       - name: Install Anchor 1.1.2
         run: |
+          set -euo pipefail
           mkdir -p "$HOME/.local/bin"
-          curl -sSfL -o "$HOME/.local/bin/anchor" \
+          curl -sSfL --retry 3 --retry-delay 2 \
+            -o "$HOME/.local/bin/anchor" \
             https://github.com/solana-foundation/anchor/releases/download/v1.1.2/anchor-1.1.2-x86_64-unknown-linux-gnu
           chmod +x "$HOME/.local/bin/anchor"
+          if [[ ! -s "$HOME/.local/bin/anchor" ]]; then
+            echo "Anchor download wrote an empty file to $HOME/.local/bin/anchor"
+            ls -la "$HOME/.local/bin" || true
+            exit 1
+          fi
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/anchor" --version
 
       - name: npm install
         run: npm install
