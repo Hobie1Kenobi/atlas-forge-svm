@@ -34,6 +34,7 @@ jobs:
 
       - name: Install Anchor 1.1.2
         run: |
+          mkdir -p "$HOME/.local/bin"
           curl -sSfL -o "$HOME/.local/bin/anchor" \
             https://github.com/solana-foundation/anchor/releases/download/v1.1.2/anchor-1.1.2-x86_64-unknown-linux-gnu
           chmod +x "$HOME/.local/bin/anchor"
@@ -47,7 +48,7 @@ jobs:
 
       - name: Ephemeral program keypair (never baked)
         run: |
-          mkdir -p target/deploy
+          mkdir -p target/deploy "$HOME/.config/solana"
           solana-keygen new --no-bip39-passphrase --silent --force -o target/deploy/atlas_forge_svm-keypair.json
           anchor keys sync
           solana-keygen new --no-bip39-passphrase --silent --force -o "$HOME/.config/solana/id.json"
