@@ -1,0 +1,107 @@
+{
+  "cluster": "devnet",
+  "rpc": "https://api.devnet.solana.com",
+  "ws": "wss://api.devnet.solana.com",
+  "caip2": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1",
+  "usdcMint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+  "usdcLabel": "Circle Devnet USDC",
+  "afusdcMint": null,
+  "facilitator": "https://x402.org/facilitator",
+  "programId": "CFogKbTTNkDn9kQr6pNtnMDJnqTCTcaF9t5dzYajtVwA",
+  "programData": "39M2ugT5z8ak6QpcpT7jx7uQdiF9j2HWAU7UL6JzhUcY",
+  "upgradeAuthority": "FazWNHnhXtKstcmbsv5wU3mhpAxqmbz3fmLjeKrun5eP",
+  "idlSha256": "55d26abcb521e94d199ab2d9079c6f73813f265c70833667eff437dccdc6e431",
+  "idlMetadata": "3PyLXpcwTRQqzABzDf1pxQKZV3ib1sSgDAekY4peoeqQ",
+  "deployTx": "1FtSXyMXUGPxSHC44eueQKakcCtrP4h9oSm2eHkK1GP2ZCG5TB2RAsChGEipcNF3AWj9uLSebvwCtxBpjE2odjL",
+  "deploySlot": 489402466,
+  "initTx": "4URvJ56Kzdi8FVqupT42rhfzmwQprdm27EcwP4kaxyeUzFjzEQzJbNLtc1cf7Y3APKGGzXkm3fKqch6D9m9h5kSn",
+  "merchantConfigPda": "5EAQnQDgJYpuYSjFEEMDZNmnnWVpG9HnEyPHwBYkuzPU",
+  "operator": "FazWNHnhXtKstcmbsv5wU3mhpAxqmbz3fmLjeKrun5eP",
+  "merchant": "13PNKtaTfg8mExzg8eGJgPijXoPxM3nCrovbTBBzTrxk",
+  "payer": "GpSUrvrxkG3HDkh45tsWoCdQj2EHzTZuaW98NGquroyK",
+  "unauthorized": "3RmggCPSNtBtZpcPvnEE4dH2bJWmVar7pfKbwqPBAjGY",
+  "merchantAta": "3jQeuMntsvjMXAwCqy2tic689citb7Bbuxe3EgJ55LJp",
+  "payerAta": "FipgLMnqhL6aTujqNT3QD2rwFUE5ZJ3E8B6PfYsuj688",
+  "unauthorizedAta": "2DRnjth2kmJgaFEHr2PThBL4z6PvR8BsRWhip7nHiU64",
+  "operatorAta": "ETWUmGTE6tbquYGkBeRqvnBeS34SkU8Q44pCg5rNa39j",
+  "ataCreateTxs": {
+    "merchant": "4dj9fpNnjQHzQ9q1puTHjsJNNK1TiuTJK3rVSoqW5yKaHZZcVWurddrRoY6QevjXxH5tuHtoywfukYNvB3JrWPd9",
+    "payer": "5T7PLjzYirUUukuMfPrAL1eFNtFgwRswNXurxU27EnPxfJZK2bCHsoz2AXxACdpStE2GvLwSiwJWxyPDeu3WA5RJ",
+    "unauthorized": "2YCPugRJ4MUJGZf7byqtpvg4aJusF6SWmD82JuUrpj7BRRzjymj8cWLnx75xhg5q2dGAGgBmG332gU3YFbVsSpV9",
+    "operator": "2DQrxWxDyvCV4SLY7UyHagKBp3Jsma5rfKW289teiFC2ktfzBpGwwxT3gj6zPcDH5ELK7XDTjsxio5y2fCw2tQi2"
+  },
+  "happyPath": [
+    {
+      "name": "x402_exact_transfer_checked",
+      "settleTx": "DfoQUW77TTu4a1DrZ8BeVhKWct6yZUsENEVu72Ew4GRYzaoDvTVpJo8rmeDGk388eLC4PozsBqaMZ653C9mSg1X",
+      "settleSlot": 489408651,
+      "recordTx": "2wEwmaQWQKWtX81osA5WMfmA1fNs61N85GsWTUKfEDp2NoLr2dRKuje8UhbLZxkPrwu3u9ySxLxeD5ooG7JtQLDx",
+      "recordSlot": 489408659,
+      "receiptPda": "ELtbr469avm4kTLYrD1nrfXoNGsZ1x89v3m2c9gFtXAX",
+      "amountAtomic": "10000",
+      "mint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+      "sourceAta": "FipgLMnqhL6aTujqNT3QD2rwFUE5ZJ3E8B6PfYsuj688",
+      "destinationAta": "3jQeuMntsvjMXAwCqy2tic689citb7Bbuxe3EgJ55LJp",
+      "instruction": "spl-token transferChecked"
+    }
+  ],
+  "usdcCreditTx": "4MSd5mpTcu8EwmtJAwiZ7WbU5MUgsyqzBWDhXhkmHM8HYgcUJBXNgUurmv4fCMYC4oNJRVfUAFyXamLca6wbLREb",
+  "balances": {
+    "before": {
+      "payerAta": { "amount": "20000000", "uiAmountString": "20" },
+      "merchantAta": { "amount": "0", "uiAmountString": "0" }
+    },
+    "after": {
+      "payerAta": { "amount": "19990000", "uiAmountString": "19.99" },
+      "merchantAta": { "amount": "10000", "uiAmountString": "0.01" }
+    }
+  },
+  "deny": [
+    {
+      "name": "unauthorized_set_params",
+      "code": 6000,
+      "signature": "CUeF7JSA2HneudcBbWP54JCMhiRee8gBs46RGTHsKCrWmioAsQzbSqwgf7wdv6VEnBg8kE2e18ygU41cs6TUxZS"
+    },
+    {
+      "name": "record_under_cap",
+      "signature": "53MpjuVKAYM9QLeNcQEUA4dv3shoWTf7xXNS4Z3f6eDbAqetBRtrLCW9as5WWA6yr6ELD6iQwTJ6644B5WbwAxEM"
+    },
+    {
+      "name": "replay_nonce",
+      "code": 6005,
+      "signature": "2jvAzmszNcoDGo1EshJbRT7jLjF9xaW4TjXvTHPEuvXqw3LMi8JuwPXBiMDzuuCAkmXkLHFhQCGjbFuFKRmEiTWS"
+    },
+    {
+      "name": "over_cap",
+      "code": 6002,
+      "signature": "JbJByWr1PRni7gaMiEVg7G35k5P7WNDdfoJ3wkUxeywP8mkHq1BY1ua322KJvko8bGtVamrFJcVJXpvvrkswp1u"
+    },
+    {
+      "name": "pause",
+      "signature": "s3EkEG7H3zQB3NGsJo25uF4tn9teVx1ckKWRXmkE9Ra3e3UKmYupcw69fR65kjZLS3RF1i6QfMtMfprJxdUVJyW"
+    },
+    {
+      "name": "paused_record",
+      "code": 6001,
+      "signature": "5Jgf3TmQ5fmZ7uuCfA51BMsniUJxJ8sM4Af47gGT7aarwidpqV7LDpwYKjFv733SSBxaVc9PnTHBRuv7Q29og91i"
+    },
+    {
+      "name": "unpause",
+      "signature": "2qf6WtPURsWkviFCJYnKVnu7vB8Eu8bEfuX3jyemzt5fpnLEKsRP9fCEaMDg3qUZ6mD4t2ywuoFkXZ6q455ZQZ5B"
+    },
+    {
+      "name": "http_no_payment_header",
+      "status": 402,
+      "scheme": "exact",
+      "network": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1"
+    },
+    {
+      "name": "http_malformed_payment_signature",
+      "status": 402
+    }
+  ],
+  "honesty": "x402 on this repo is exact SPL TransferChecked to the merchant ATA. The Anchor program is a cap/pause/replay receipt registry, not the settlement target.",
+  "status": "DEVNET REHEARSAL EXECUTED",
+  "blockedReason": null,
+  "note": "All signatures were confirmed via getTransaction on https://api.devnet.solana.com. Explorer links use cluster=devnet. No invented hashes. No mainnet. No Solana Testnet. No Path B. Not an issuance."
+}

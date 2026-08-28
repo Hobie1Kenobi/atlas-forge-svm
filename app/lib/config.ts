@@ -82,5 +82,5 @@ export function assertDevnetOnly(cluster: string, rpc: string): void {
 }
 
 export const PROGRAM_ID_DEFAULT = new PublicKey(
-  "5u6WZQsMPrufRZVbnWKjv6K1cH2pmF3gXbVhK15rh1eQ"
+  "CFogKbTTNkDn9kQr6pNtnMDJnqTCTcaF9t5dzYajtVwA"
 );

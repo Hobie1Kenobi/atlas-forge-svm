@@ -12,7 +12,7 @@ pub use events::*;
 pub use instructions::*;
 pub use state::*;
 
-declare_id!("5u6WZQsMPrufRZVbnWKjv6K1cH2pmF3gXbVhK15rh1eQ");
+declare_id!("CFogKbTTNkDn9kQr6pNtnMDJnqTCTcaF9t5dzYajtVwA");
 
 /// Cap/pause/replay receipt registry.
 ///

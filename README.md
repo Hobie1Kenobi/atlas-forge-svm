@@ -60,11 +60,13 @@ Anchor 2.x is not used.
 
 ```bash
 cp .env.example .env
-# generate gitignored keypairs (never commit keys/ or .env)
-mkdir -p keys target/deploy
+# generate gitignored keypairs (never commit keys/, .keys/, or .env)
+mkdir -p keys .keys target/deploy
+solana-keygen new --no-bip39-passphrase -o keys/operator.json
 solana-keygen new --no-bip39-passphrase -o keys/merchant.json
 solana-keygen new --no-bip39-passphrase -o keys/payer.json
 solana-keygen new --no-bip39-passphrase -o keys/unauthorized.json
+solana-keygen new --no-bip39-passphrase -o keys/program.json
 solana-keygen new --no-bip39-passphrase -o target/deploy/atlas_forge_svm-keypair.json
 anchor keys sync   # if the program pubkey differs from declare_id!
 

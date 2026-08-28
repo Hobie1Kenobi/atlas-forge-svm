@@ -1,10 +1,10 @@
 # PUBLIC_DEVNET_REPORT
 
-Status: **BLOCKED**
+Status: **DEVNET REHEARSAL EXECUTED** (not an issuance, not mainnet)
 
 x402 on this repo is exact SPL TransferChecked to the merchant ATA. The Anchor program is a cap/pause/replay receipt registry, not the settlement target.
 
-Devnet deploy and happy-path USDC movement were not executed. Local `anchor test --validator legacy` is green (7/7). Do not invent program IDs, signatures, or explorer URLs for a deployment that did not confirm.
+This is a Solana **Devnet** rehearsal, not an issuance, not mainnet, not a marketplace. No USD value claims.
 
 ## Cluster
 
@@ -15,70 +15,60 @@ Devnet deploy and happy-path USDC movement were not executed. Local `anchor test
 - Explorer: https://explorer.solana.com/?cluster=devnet
 - No Solana mainnet. No Solana Testnet (`api.testnet.solana.com`). No real SOL value claims. No mainnet USDC.
 
-## Facilitator kinds (live GET https://x402.org/facilitator/supported on 2026-08-28)
+## Program (confirmed on Devnet)
 
-```json
-[
-  {
-    "x402Version": 2,
-    "scheme": "exact",
-    "network": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1",
-    "extra": {
-      "feePayer": "CKPKJWNdJEqa81x7CkZ14BVPiY6y16Sxs7owznqtWYp5",
-      "features": { "smartWalletSupported": true }
-    }
-  },
-  {
-    "x402Version": 1,
-    "scheme": "exact",
-    "network": "solana-devnet",
-    "extra": {
-      "feePayer": "CKPKJWNdJEqa81x7CkZ14BVPiY6y16Sxs7owznqtWYp5"
-    }
-  }
-]
-```
+- Program ID: `CFogKbTTNkDn9kQr6pNtnMDJnqTCTcaF9t5dzYajtVwA`
+- Program explorer: https://explorer.solana.com/address/CFogKbTTNkDn9kQr6pNtnMDJnqTCTcaF9t5dzYajtVwA?cluster=devnet
+- ProgramData: `39M2ugT5z8ak6QpcpT7jx7uQdiF9j2HWAU7UL6JzhUcY`
+- Upgrade authority (operator): `FazWNHnhXtKstcmbsv5wU3mhpAxqmbz3fmLjeKrun5eP`
+- Deploy tx (slot 489402466, `getTransaction` err=null): https://explorer.solana.com/tx/1FtSXyMXUGPxSHC44eueQKakcCtrP4h9oSm2eHkK1GP2ZCG5TB2RAsChGEipcNF3AWj9uLSebvwCtxBpjE2odjL?cluster=devnet
+- IDL SHA-256: `55d26abcb521e94d199ab2d9079c6f73813f265c70833667eff437dccdc6e431`
+- Init tx: https://explorer.solana.com/tx/4URvJ56Kzdi8FVqupT42rhfzmwQprdm27EcwP4kaxyeUzFjzEQzJbNLtc1cf7Y3APKGGzXkm3fKqch6D9m9h5kSn?cluster=devnet
+- Merchant config PDA: `5EAQnQDgJYpuYSjFEEMDZNmnnWVpG9HnEyPHwBYkuzPU`
+- Mint locked at init: Circle Devnet USDC `4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU` (not AFUSDC)
 
-`upto` and `batch-settlement` were present only on `eip155:84532`. This repo does not claim them on Solana. CDP `/supported` is unused (401 without an account).
+## Circle vs AFUSDC
 
-## Program
+- Asset is Circle Devnet USDC `4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU` (6 decimals). **AFUSDC was not minted.**
+- Payer Circle USDC credit (slot 489407792, `err=null`): https://explorer.solana.com/tx/4MSd5mpTcu8EwmtJAwiZ7WbU5MUgsyqzBWDhXhkmHM8HYgcUJBXNgUurmv4fCMYC4oNJRVfUAFyXamLca6wbLREb?cluster=devnet
 
-- Declared program ID (local keypair, **not deployed**): `5u6WZQsMPrufRZVbnWKjv6K1cH2pmF3gXbVhK15rh1eQ`
-- Devnet program ID: none (deploy not reached)
-- IDL SHA-256: `efdb490756ef11bc52f85d5e9499c8677a27780080793d30bb665e9f0e386452`
-- Init tx: none
+## Happy path (x402 exact SPL TransferChecked)
 
-## Happy path
+Merchant config was **not paused** (`paused: false`) after the deny-matrix unpause.
 
-No confirmed signatures. Public RPC airdrop failed before ATAs / Circle Devnet USDC / `anchor deploy`.
+- Settle tx (slot 489408651, `spl-token transferChecked` 10000 atomic / 0.01, source payer ATA → destination merchant ATA, mint Circle Devnet USDC): https://explorer.solana.com/tx/DfoQUW77TTu4a1DrZ8BeVhKWct6yZUsENEVu72Ew4GRYzaoDvTVpJo8rmeDGk388eLC4PozsBqaMZ653C9mSg1X?cluster=devnet
+- Registry `record_settlement` (slot 489408659, program log `Instruction: RecordSettlement` success): https://explorer.solana.com/tx/2wEwmaQWQKWtX81osA5WMfmA1fNs61N85GsWTUKfEDp2NoLr2dRKuje8UhbLZxkPrwu3u9ySxLxeD5ooG7JtQLDx?cluster=devnet
+- Receipt PDA: https://explorer.solana.com/address/ELtbr469avm4kTLYrD1nrfXoNGsZ1x89v3m2c9gFtXAX?cluster=devnet
 
-## Deny evidence (local program + HTTP skeleton)
+ATA balances from `getTokenAccountBalance` on `https://api.devnet.solana.com`:
 
-| # | Deny | Evidence |
+| ATA | Before | After |
 |---|---|---|
-| 1 | Over cap | `tests/atlas_forge_svm.ts` → `OverCap` |
-| 2 | Pause | `tests/atlas_forge_svm.ts` → `Paused`; settled receipt remains `settled: true` |
-| 3 | Wrong mint | `tests/atlas_forge_svm.ts` → `WrongMint` / token mint constraint |
-| 4 | Replay nonce | `tests/atlas_forge_svm.ts` → `ReplayNonce` |
-| 5 | Unauthorized `set_params` | `tests/atlas_forge_svm.ts` → `Unauthorized` / `ConstraintHasOne` |
-| 6 | No `PAYMENT-SIGNATURE` | `scripts/06-x402-deny.ts` / `GET /resource` → HTTP 402 (needs SOL-funded merchant to boot the live server) |
+| payer `FipgLMnqhL6aTujqNT3QD2rwFUE5ZJ3E8B6PfYsuj688` | 20000000 (20) | 19990000 (19.99) |
+| merchant `3jQeuMntsvjMXAwCqy2tic689citb7Bbuxe3EgJ55LJp` | 0 (0) | 10000 (0.01) |
 
-## Live probe snapshot (public RPC, 2026-08-28)
+## Deny evidence (live Devnet, confirmed via `getTransaction`)
 
-- `getHealth` → `ok`
-- `solana-core` → `4.3.0-beta.2`
-- genesis → `EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG` (matches CAIP-2 prefix)
-- slot ~489212601, epoch 1132
-- Circle Devnet USDC `4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU` initialized, decimals 6, owner `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA`, mint authority `GrNg1XM2ctzeE2mXxXCfhcTUbejM8Z4z4wNVTy2FjMEz`, freeze authority `CJtyoKSLrktozQzjERTiK3btQtiTK3nN4QrqGHLidyCT` (faucet-minted supply, not AUM)
-- `faucet.solana.com` HTTP 200
+| Deny | Code | Signature | Explorer |
+|---|---|---|---|
+| Unauthorized `set_params` | 6000 | `CUeF7JSA2HneudcBbWP54JCMhiRee8gBs46RGTHsKCrWmioAsQzbSqwgf7wdv6VEnBg8kE2e18ygU41cs6TUxZS` | https://explorer.solana.com/tx/CUeF7JSA2HneudcBbWP54JCMhiRee8gBs46RGTHsKCrWmioAsQzbSqwgf7wdv6VEnBg8kE2e18ygU41cs6TUxZS?cluster=devnet |
+| Replay nonce | 6005 | `2jvAzmszNcoDGo1EshJbRT7jLjF9xaW4TjXvTHPEuvXqw3LMi8JuwPXBiMDzuuCAkmXkLHFhQCGjbFuFKRmEiTWS` | https://explorer.solana.com/tx/2jvAzmszNcoDGo1EshJbRT7jLjF9xaW4TjXvTHPEuvXqw3LMi8JuwPXBiMDzuuCAkmXkLHFhQCGjbFuFKRmEiTWS?cluster=devnet |
+| Over cap | 6002 | `JbJByWr1PRni7gaMiEVg7G35k5P7WNDdfoJ3wkUxeywP8mkHq1BY1ua322KJvko8bGtVamrFJcVJXpvvrkswp1u` | https://explorer.solana.com/tx/JbJByWr1PRni7gaMiEVg7G35k5P7WNDdfoJ3wkUxeywP8mkHq1BY1ua322KJvko8bGtVamrFJcVJXpvvrkswp1u?cluster=devnet |
+| Pause (new receipt) | 6001 | `5Jgf3TmQ5fmZ7uuCfA51BMsniUJxJ8sM4Af47gGT7aarwidpqV7LDpwYKjFv733SSBxaVc9PnTHBRuv7Q29og91i` | https://explorer.solana.com/tx/5Jgf3TmQ5fmZ7uuCfA51BMsniUJxJ8sM4Af47gGT7aarwidpqV7LDpwYKjFv733SSBxaVc9PnTHBRuv7Q29og91i?cluster=devnet |
+| HTTP `GET /resource` without `PAYMENT-SIGNATURE` | HTTP 402 exact / `solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1` | n/a | n/a |
 
-## Blocked reasons (exact)
+Settled receipt under cap (registry record, not x402 settlement): https://explorer.solana.com/tx/53MpjuVKAYM9QLeNcQEUA4dv3shoWTf7xXNS4Z3f6eDbAqetBRtrLCW9as5WWA6yr6ELD6iQwTJ6644B5WbwAxEM?cluster=devnet
 
-1. `scripts/01-airdrop.ts` / `connection.requestAirdrop`: `airdrop to DvuEDnCHimQwXrJ7uAhz5ybkF9dzcrnDgaBB8SBPWqQP failed: Internal error`
-2. `solana airdrop 2 <merchant> --url https://api.devnet.solana.com`: `Error: airdrop request failed. This can happen when the rate limit is reached.`
-3. `scripts/02-usdc.ts` (create ATA): `Transaction simulation failed: Attempt to debit an account but found no record of a prior credit.` because merchant/payer have **0 SOL**. Documented USDC path remains https://faucet.circle.com — not attempted after SOL airdrop failed. No fake USDC mint was created.
+Pause tx: https://explorer.solana.com/tx/s3EkEG7H3zQB3NGsJo25uF4tn9teVx1ckKWRXmkE9Ra3e3UKmYupcw69fR65kjZLS3RF1i6QfMtMfprJxdUVJyW?cluster=devnet
 
-Keys remain gitignored. Skeleton + local tests are complete.
+Unpause tx: https://explorer.solana.com/tx/2qf6WtPURsWkviFCJYnKVnu7vB8Eu8bEfuX3jyemzt5fpnLEKsRP9fCEaMDg3qUZ6mD4t2ywuoFkXZ6q455ZQZ5B?cluster=devnet
+
+## ATA creates (Circle mint)
+
+- merchant `3jQeuMntsvjMXAwCqy2tic689citb7Bbuxe3EgJ55LJp`: https://explorer.solana.com/tx/4dj9fpNnjQHzQ9q1puTHjsJNNK1TiuTJK3rVSoqW5yKaHZZcVWurddrRoY6QevjXxH5tuHtoywfukYNvB3JrWPd9?cluster=devnet
+- payer `FipgLMnqhL6aTujqNT3QD2rwFUE5ZJ3E8B6PfYsuj688`: https://explorer.solana.com/tx/5T7PLjzYirUUukuMfPrAL1eFNtFgwRswNXurxU27EnPxfJZK2bCHsoz2AXxACdpStE2GvLwSiwJWxyPDeu3WA5RJ?cluster=devnet
+- unauthorized `2DRnjth2kmJgaFEHr2PThBL4z6PvR8BsRWhip7nHiU64`: https://explorer.solana.com/tx/2YCPugRJ4MUJGZf7byqtpvg4aJusF6SWmD82JuUrpj7BRRzjymj8cWLnx75xhg5q2dGAGgBmG332gU3YFbVsSpV9?cluster=devnet
+- operator `ETWUmGTE6tbquYGkBeRqvnBeS34SkU8Q44pCg5rNa39j`: https://explorer.solana.com/tx/2DQrxWxDyvCV4SLY7UyHagKBp3Jsma5rfKW289teiFC2ktfzBpGwwxT3gj6zPcDH5ELK7XDTjsxio5y2fCw2tQi2?cluster=devnet
 
 ## Never
 
@@ -87,3 +77,4 @@ Keys remain gitignored. Skeleton + local tests are complete.
 - upto-on-Solana
 - Path B (facilitator executing a custom Atlas instruction)
 - Invented explorer URLs
+- Homemade mint labeled USDC

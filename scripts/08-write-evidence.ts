@@ -27,7 +27,7 @@ async function main() {
   const usdcScript = process.env.USDC_STATUS;
   if (usdcScript) blockedReasons.push(usdcScript);
 
-  const programId = process.env.PROGRAM_ID ?? "5u6WZQsMPrufRZVbnWKjv6K1cH2pmF3gXbVhK15rh1eQ";
+  const programId = process.env.PROGRAM_ID ?? "CFogKbTTNkDn9kQr6pNtnMDJnqTCTcaF9t5dzYajtVwA";
   const initTx = process.env.INIT_TX ?? null;
   const happySigs = process.env.HAPPY_SIGS ? process.env.HAPPY_SIGS.split(",") : [];
   const executed = Boolean(initTx) && happySigs.length > 0;

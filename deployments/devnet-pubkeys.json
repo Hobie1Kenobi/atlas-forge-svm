@@ -1,0 +1,23 @@
+{
+  "cluster": "solana-devnet",
+  "rpc": "https://api.devnet.solana.com",
+  "ws": "wss://api.devnet.solana.com",
+  "caip2": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1",
+  "programId": "CFogKbTTNkDn9kQr6pNtnMDJnqTCTcaF9t5dzYajtVwA",
+  "operator": "FazWNHnhXtKstcmbsv5wU3mhpAxqmbz3fmLjeKrun5eP",
+  "merchant": "13PNKtaTfg8mExzg8eGJgPijXoPxM3nCrovbTBBzTrxk",
+  "payer": "GpSUrvrxkG3HDkh45tsWoCdQj2EHzTZuaW98NGquroyK",
+  "unauthorized": "3RmggCPSNtBtZpcPvnEE4dH2bJWmVar7pfKbwqPBAjGY",
+  "usdcMint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+  "tokenProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+  "associatedTokenProgram": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+  "merchantAta": "3jQeuMntsvjMXAwCqy2tic689citb7Bbuxe3EgJ55LJp",
+  "payerAta": "FipgLMnqhL6aTujqNT3QD2rwFUE5ZJ3E8B6PfYsuj688",
+  "unauthorizedAta": "2DRnjth2kmJgaFEHr2PThBL4z6PvR8BsRWhip7nHiU64",
+  "operatorAta": "ETWUmGTE6tbquYGkBeRqvnBeS34SkU8Q44pCg5rNa39j",
+  "merchantConfigPda": "5EAQnQDgJYpuYSjFEEMDZNmnnWVpG9HnEyPHwBYkuzPU",
+  "payerWindowPda": "6Cfdrd5dzPU7h14bXN76iJG6N48z227uGtpwxjmNCK7X",
+  "honesty": "x402 on this repo is exact SPL TransferChecked to the merchant ATA. The Anchor program is a cap/pause/replay receipt registry, not the settlement target.",
+  "status": "waiting for funding",
+  "note": "Pubkeys only. No transactions sent. Keypair files are gitignored under keys/ and .keys/. Waiting for ATLAS to fund these addresses from the funded operator wallet, then a follow-up will deploy."
+}
