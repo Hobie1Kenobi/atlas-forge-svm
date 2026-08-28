@@ -1,6 +1,6 @@
 # PUBLIC_DEVNET_REPORT
 
-Status: **BLOCKED** (program deploy + init + registry deny matrix confirmed; x402 happy-path USDC movement waiting on Circle faucet recaptcha)
+Status: **DEVNET REHEARSAL EXECUTED** (not an issuance, not mainnet)
 
 x402 on this repo is exact SPL TransferChecked to the merchant ATA. The Anchor program is a cap/pause/replay receipt registry, not the settlement target.
 
@@ -29,16 +29,23 @@ This is a Solana **Devnet** rehearsal, not an issuance, not mainnet, not a marke
 
 ## Circle vs AFUSDC
 
-- Circle Devnet USDC mint is live and is the merchant config mint.
-- Payer ATA `FipgLMnqhL6aTujqNT3QD2rwFUE5ZJ3E8B6PfYsuj688` balance is **0**.
-- Circle faucet attempts:
-  - `POST https://api.circle.com/v1/faucet/drips` → HTTP 401 `malformed authorization. Missing API key`
-  - `POST https://faucet.circle.com/api/graphql` `requestToken(blockchain: SOL, token: USDC)` → `ReCAPTCHA verification failed` (`RECAPTCHA_ERROR` / `RECAPTCHA_ASSESSMENT_FAILED`)
-- AFUSDC was **not** minted. Substituting a homemade mint would not match the initialized config mint (`has_one = mint`) and must never be labeled USDC.
+- Asset is Circle Devnet USDC `4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU` (6 decimals). **AFUSDC was not minted.**
+- Payer Circle USDC credit (slot 489407792, `err=null`): https://explorer.solana.com/tx/4MSd5mpTcu8EwmtJAwiZ7WbU5MUgsyqzBWDhXhkmHM8HYgcUJBXNgUurmv4fCMYC4oNJRVfUAFyXamLca6wbLREb?cluster=devnet
 
-## Happy path
+## Happy path (x402 exact SPL TransferChecked)
 
-_No confirmed x402 exact SPL `TransferChecked` signatures. Payer has 0 Circle Devnet USDC. Do not invent explorer URLs._
+Merchant config was **not paused** (`paused: false`) after the deny-matrix unpause.
+
+- Settle tx (slot 489408651, `spl-token transferChecked` 10000 atomic / 0.01, source payer ATA → destination merchant ATA, mint Circle Devnet USDC): https://explorer.solana.com/tx/DfoQUW77TTu4a1DrZ8BeVhKWct6yZUsENEVu72Ew4GRYzaoDvTVpJo8rmeDGk388eLC4PozsBqaMZ653C9mSg1X?cluster=devnet
+- Registry `record_settlement` (slot 489408659, program log `Instruction: RecordSettlement` success): https://explorer.solana.com/tx/2wEwmaQWQKWtX81osA5WMfmA1fNs61N85GsWTUKfEDp2NoLr2dRKuje8UhbLZxkPrwu3u9ySxLxeD5ooG7JtQLDx?cluster=devnet
+- Receipt PDA: https://explorer.solana.com/address/ELtbr469avm4kTLYrD1nrfXoNGsZ1x89v3m2c9gFtXAX?cluster=devnet
+
+ATA balances from `getTokenAccountBalance` on `https://api.devnet.solana.com`:
+
+| ATA | Before | After |
+|---|---|---|
+| payer `FipgLMnqhL6aTujqNT3QD2rwFUE5ZJ3E8B6PfYsuj688` | 20000000 (20) | 19990000 (19.99) |
+| merchant `3jQeuMntsvjMXAwCqy2tic689citb7Bbuxe3EgJ55LJp` | 0 (0) | 10000 (0.01) |
 
 ## Deny evidence (live Devnet, confirmed via `getTransaction`)
 
@@ -56,7 +63,7 @@ Pause tx: https://explorer.solana.com/tx/s3EkEG7H3zQB3NGsJo25uF4tn9teVx1ckKWRXmk
 
 Unpause tx: https://explorer.solana.com/tx/2qf6WtPURsWkviFCJYnKVnu7vB8Eu8bEfuX3jyemzt5fpnLEKsRP9fCEaMDg3qUZ6mD4t2ywuoFkXZ6q455ZQZ5B?cluster=devnet
 
-## ATA creates (Circle mint, 0 balance)
+## ATA creates (Circle mint)
 
 - merchant `3jQeuMntsvjMXAwCqy2tic689citb7Bbuxe3EgJ55LJp`: https://explorer.solana.com/tx/4dj9fpNnjQHzQ9q1puTHjsJNNK1TiuTJK3rVSoqW5yKaHZZcVWurddrRoY6QevjXxH5tuHtoywfukYNvB3JrWPd9?cluster=devnet
 - payer `FipgLMnqhL6aTujqNT3QD2rwFUE5ZJ3E8B6PfYsuj688`: https://explorer.solana.com/tx/5T7PLjzYirUUukuMfPrAL1eFNtFgwRswNXurxU27EnPxfJZK2bCHsoz2AXxACdpStE2GvLwSiwJWxyPDeu3WA5RJ?cluster=devnet

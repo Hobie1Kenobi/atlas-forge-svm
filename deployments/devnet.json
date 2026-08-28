@@ -30,7 +30,32 @@
     "unauthorized": "2YCPugRJ4MUJGZf7byqtpvg4aJusF6SWmD82JuUrpj7BRRzjymj8cWLnx75xhg5q2dGAGgBmG332gU3YFbVsSpV9",
     "operator": "2DQrxWxDyvCV4SLY7UyHagKBp3Jsma5rfKW289teiFC2ktfzBpGwwxT3gj6zPcDH5ELK7XDTjsxio5y2fCw2tQi2"
   },
-  "happyPath": [],
+  "happyPath": [
+    {
+      "name": "x402_exact_transfer_checked",
+      "settleTx": "DfoQUW77TTu4a1DrZ8BeVhKWct6yZUsENEVu72Ew4GRYzaoDvTVpJo8rmeDGk388eLC4PozsBqaMZ653C9mSg1X",
+      "settleSlot": 489408651,
+      "recordTx": "2wEwmaQWQKWtX81osA5WMfmA1fNs61N85GsWTUKfEDp2NoLr2dRKuje8UhbLZxkPrwu3u9ySxLxeD5ooG7JtQLDx",
+      "recordSlot": 489408659,
+      "receiptPda": "ELtbr469avm4kTLYrD1nrfXoNGsZ1x89v3m2c9gFtXAX",
+      "amountAtomic": "10000",
+      "mint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+      "sourceAta": "FipgLMnqhL6aTujqNT3QD2rwFUE5ZJ3E8B6PfYsuj688",
+      "destinationAta": "3jQeuMntsvjMXAwCqy2tic689citb7Bbuxe3EgJ55LJp",
+      "instruction": "spl-token transferChecked"
+    }
+  ],
+  "usdcCreditTx": "4MSd5mpTcu8EwmtJAwiZ7WbU5MUgsyqzBWDhXhkmHM8HYgcUJBXNgUurmv4fCMYC4oNJRVfUAFyXamLca6wbLREb",
+  "balances": {
+    "before": {
+      "payerAta": { "amount": "20000000", "uiAmountString": "20" },
+      "merchantAta": { "amount": "0", "uiAmountString": "0" }
+    },
+    "after": {
+      "payerAta": { "amount": "19990000", "uiAmountString": "19.99" },
+      "merchantAta": { "amount": "10000", "uiAmountString": "0.01" }
+    }
+  },
   "deny": [
     {
       "name": "unauthorized_set_params",
@@ -76,7 +101,7 @@
     }
   ],
   "honesty": "x402 on this repo is exact SPL TransferChecked to the merchant ATA. The Anchor program is a cap/pause/replay receipt registry, not the settlement target.",
-  "status": "BLOCKED",
-  "blockedReason": "Circle Devnet USDC faucet did not credit payer ATA FipgLMnqhL6aTujqNT3QD2rwFUE5ZJ3E8B6PfYsuj688 (balance 0). POST https://api.circle.com/v1/faucet/drips → 401 missing API key. POST https://faucet.circle.com/api/graphql mutation requestToken(blockchain: SOL, token: USDC) → ReCAPTCHA verification failed (RECAPTCHA_ERROR / RECAPTCHA_ASSESSMENT_FAILED). Merchant config mint is locked to Circle Devnet USDC 4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU, so AFUSDC cannot be substituted without a new merchant PDA. x402 happy-path TransferChecked is waiting on Circle USDC.",
-  "note": "All signatures below were confirmed via getTransaction on https://api.devnet.solana.com. Explorer links use cluster=devnet. No invented hashes. No mainnet. No Solana Testnet. No Path B."
+  "status": "DEVNET REHEARSAL EXECUTED",
+  "blockedReason": null,
+  "note": "All signatures were confirmed via getTransaction on https://api.devnet.solana.com. Explorer links use cluster=devnet. No invented hashes. No mainnet. No Solana Testnet. No Path B. Not an issuance."
 }
